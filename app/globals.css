@@ -1,0 +1,396 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────
+   AZAHARA — Design Token System
+   Tailwind v4: all theme config lives here
+   ───────────────────────────────────────── */
+
+@theme {
+  /* Brand color palette */
+  --color-gold:        #cd853f;
+  --color-gold-light:  #f0b060;
+  --color-gold-dim:    rgba(205, 133, 63, 0.4);
+  --color-black-deep:  #030201;
+  --color-black-card:  #0d0804;
+  --color-white:       #ffffff;
+  --color-white-sub:   rgba(255, 255, 255, 0.5);
+  --color-border:      rgba(205, 133, 63, 0.12);
+
+  /* Typography */
+  --font-sans:   "Geist", "Inter", system-ui, sans-serif;
+  --font-serif:  "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-mono:   "Geist Mono", "JetBrains Mono", monospace;
+
+  /* Extended spacing */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-30: 7.5rem;
+
+  /* Animations */
+  --animate-grain:   grainShift 0.8s steps(1) infinite;
+  --animate-marquee: marquee 20s linear infinite;
+  --animate-pulse-gold: pulseGold 2s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   CSS Custom Properties (direct var access)
+   ───────────────────────────────────────── */
+:root {
+  --gold:        #cd853f;
+  --gold-light:  #f0b060;
+  --gold-dim:    rgba(205, 133, 63, 0.4);
+  --black-deep:  #030201;
+  --black-card:  #0d0804;
+  --white:       #ffffff;
+  --white-sub:   rgba(255, 255, 255, 0.5);
+  --border:      rgba(205, 133, 63, 0.12);
+}
+
+/* ─────────────────────────────────────────
+   Keyframes
+   ───────────────────────────────────────── */
+
+/* 8-step film grain animation */
+@keyframes grainShift {
+  0%   { background-position:   0px    0px; }
+  12%  { background-position:  10px   -5px; }
+  25%  { background-position:  -8px   12px; }
+  37%  { background-position:  14px    3px; }
+  50%  { background-position:  -6px   -9px; }
+  62%  { background-position:  18px    7px; }
+  75%  { background-position:  -12px  15px; }
+  87%  { background-position:   4px  -14px; }
+  100% { background-position:   0px    0px; }
+}
+
+/* Infinite horizontal marquee (olfactory notes band) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Gold pulsing scroll cue */
+@keyframes pulseGold {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.15); }
+}
+
+/* Fade-in upward — hero text entrance */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Subtle float — used in CSS fallback if R3F not loaded */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ─────────────────────────────────────────
+   Base / Reset
+   ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--black-deep);
+  color: var(--white);
+  font-family: var(--font-sans, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Reduced motion — respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─────────────────────────────────────────
+   Grain Overlay
+   Fixed layer giving "screen alive" texture
+   ───────────────────────────────────────── */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.04;
+  background-image: url("/grain.svg");
+  background-size: 200px 200px;
+  background-repeat: repeat;
+  animation: grainShift 0.8s steps(1) infinite;
+  will-change: background-position;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none; }
+}
+
+/* ─────────────────────────────────────────
+   Scrollbar — slim gold aesthetic
+   ───────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--black-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold-dim);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dim) var(--black-deep);
+}
+
+/* ─────────────────────────────────────────
+   Typography Helpers
+   ───────────────────────────────────────── */
+.font-serif {
+  font-family: var(--font-serif, Georgia, serif);
+}
+
+.text-eyebrow {
+  font-size: 9px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: rgba(205, 133, 63, 0.6);
+}
+
+.text-display {
+  font-weight: 200;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+}
+
+/* ─────────────────────────────────────────
+   Button Helpers
+   ───────────────────────────────────────── */
+
+/* Primary gold fill — text black for contrast (WCAG AA) */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gold);
+  color: #000000;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn-gold:hover:not(:disabled) {
+  background-color: var(--gold-light);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(205, 133, 63, 0.25);
+}
+
+.btn-gold:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
+
+.btn-gold:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Outline variant — transparent with gold border */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--gold-light);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 13px 35px;
+  border: 1px solid var(--border);
+  border-radius: 1px;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn-outline:hover:not(:disabled) {
+  border-color: rgba(205, 133, 63, 0.5);
+  background-color: rgba(205, 133, 63, 0.06);
+  color: var(--gold-light);
+}
+
+.btn-outline:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
+
+.btn-outline:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Ghost text-only button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 200ms ease;
+  padding: 0;
+  text-decoration: none;
+}
+
+.btn-ghost::after {
+  content: "→";
+  color: rgba(205, 133, 63, 0.5);
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+.btn-ghost:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-ghost:hover::after {
+  color: var(--gold);
+  transform: translateX(4px);
+}
+
+/* ─────────────────────────────────────────
+   Marquee Strip
+   ───────────────────────────────────────── */
+.marquee-track {
+  display: flex;
+  gap: 48px;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+}
+
+.marquee-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+}
+
+/* ─────────────────────────────────────────
+   Scroll Cue Line
+   ───────────────────────────────────────── */
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(180deg, rgba(205, 133, 63, 0.5), transparent);
+  animation: pulseGold 2s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   Card Surface
+   ───────────────────────────────────────── */
+.card-dark {
+  background-color: var(--black-card);
+  border: 1px solid var(--border);
+  transition: background-color 300ms ease, box-shadow 300ms ease;
+}
+
+.card-dark:hover {
+  background-color: #0f0906;
+  box-shadow: 0 0 0 1px rgba(205, 133, 63, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ─────────────────────────────────────────
+   Ambient Glow Helpers
+   ───────────────────────────────────────── */
+.glow-amber {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(205, 133, 63, 0.08), transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────
+   Selection color
+   ───────────────────────────────────────── */
+::selection {
+  background-color: rgba(205, 133, 63, 0.25);
+  color: var(--white);
+}
+
+/* ─────────────────────────────────────────
+   Skip link — visible only on keyboard focus
+   ───────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 10000;
+  transform: translateY(-160%);
+  background: var(--gold);
+  color: #000;
+  padding: 10px 18px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--gold-light);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────
+   Visible keyboard focus for form controls
+   (box-shadow ring survives inline outline:none)
+   ───────────────────────────────────────── */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  box-shadow: 0 0 0 2px var(--gold-light);
+  border-color: var(--gold-light);
+}
