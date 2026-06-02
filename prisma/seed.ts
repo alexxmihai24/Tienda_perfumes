@@ -11,7 +11,7 @@ const products = [
       'Oud de Laos, ambar gris y sandalo de Mysore. Una composicion que evoluciona sobre la piel durante 12 horas.',
     price: 189,
     stock: 50,
-    images: ['https://images.unsplash.com/photo-1619994403073-2cec844b8e63?w=800&q=80'],
+    images: ['/products/ambre-noir.jpg'],
     notesTop: ['Bergamota', 'Cardamomo'],
     notesHeart: ['Oud de Laos', 'Rosa de Damasco'],
     notesBase: ['Ambar Gris', 'Sandalo de Mysore', 'Benjui'],
@@ -26,7 +26,7 @@ const products = [
       'Sandalo de Mysore, cedro del Atlas y vainilla Bourbon. Envolvente y sensorial.',
     price: 145,
     stock: 80,
-    images: ['https://images.unsplash.com/photo-1541643600914-78b084683702?w=800&q=80'],
+    images: ['/products/santal-mystique.jpg'],
     notesTop: ['Pera', 'Azafran'],
     notesHeart: ['Sandalo de Mysore', 'Cedro del Atlas'],
     notesBase: ['Vainilla Bourbon', 'Almizcle Blanco'],
@@ -41,7 +41,7 @@ const products = [
       'Oud cultivado, rosa de Taif y nagarmotha. La firma de los grandes ateliers.',
     price: 220,
     stock: 30,
-    images: ['https://images.unsplash.com/photo-1587017539504-67cfbddac569?w=800&q=80'],
+    images: ['/products/oud-imperial.jpg'],
     notesTop: ['Pimienta Rosa', 'Incienso'],
     notesHeart: ['Rosa de Taif', 'Oud Cultivado'],
     notesBase: ['Nagarmotha', 'Pachuli', 'Vetiver'],
@@ -56,7 +56,7 @@ const products = [
       'Azahar de Sevilla, neroli y musgo de roble. Fresco, floral y atemporal.',
     price: 125,
     stock: 60,
-    images: ['https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=800&q=80'],
+    images: ['/products/fleur-azahar.jpg'],
     notesTop: ['Azahar', 'Neroli', 'Bergamota'],
     notesHeart: ['Jazmin', 'Ylang-Ylang'],
     notesBase: ['Musgo de Roble', 'Cedro', 'Almizcle'],
@@ -71,7 +71,7 @@ const products = [
       'Rosa de mayo absoluta, canela de Ceilan y ambar calido. Romantico y atemporal.',
     price: 165,
     stock: 45,
-    images: ['https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=80'],
+    images: ['/products/rose-absolue.jpg'],
     notesTop: ['Grosella Negra', 'Pera'],
     notesHeart: ['Rosa de Mayo', 'Canela de Ceilan'],
     notesBase: ['Ambar', 'Pachuli', 'Vainilla'],
@@ -86,7 +86,7 @@ const products = [
       'Vetiver de Haiti, bergamota y madera de ebano. Para quienes buscan la profundidad.',
     price: 155,
     stock: 35,
-    images: ['https://images.unsplash.com/photo-1567721913486-6585f069b3a2?w=800&q=80'],
+    images: ['/products/vetiver-obscur.jpg'],
     notesTop: ['Bergamota', 'Limon'],
     notesHeart: ['Vetiver de Haiti', 'Iris'],
     notesBase: ['Madera de Ebano', 'Oud', 'Almizcle Gris'],
@@ -101,7 +101,9 @@ async function main() {
   for (const p of products) {
     await prisma.product.upsert({
       where: { slug: p.slug },
-      update: {},
+      // Update all mutable fields so re-seeding syncs existing rows
+      // (e.g. migrating image URLs from Unsplash to local /products paths).
+      update: p,
       create: p,
     })
   }

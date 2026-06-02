@@ -60,7 +60,7 @@ export function AdminSidebar() {
                 textTransform: 'uppercase',
                 textDecoration: 'none',
                 color: isActive ? 'var(--gold-light)' : 'rgba(255,255,255,0.7)',
-                background: isActive ? 'rgba(205,133,63,0.08)' : 'transparent',
+                background: isActive ? 'rgba(154,164,180,0.1)' : 'transparent',
                 borderLeft: `2px solid ${isActive ? 'var(--gold)' : 'transparent'}`,
                 transition: 'all 0.2s',
               }}

@@ -61,7 +61,7 @@ export default function AdminLoginPage() {
           aria-label="Formulario de acceso admin"
         >
           <div>
-            <label htmlFor="email" style={{ display: 'block', fontSize: 8, letterSpacing: 4, color: 'rgba(205,133,63,0.5)', textTransform: 'uppercase', marginBottom: 8 }}>
+            <label htmlFor="email" style={{ display: 'block', fontSize: 8, letterSpacing: 4, color: 'rgba(154,164,180,0.5)', textTransform: 'uppercase', marginBottom: 8 }}>
               Email
             </label>
             <input
@@ -85,7 +85,7 @@ export default function AdminLoginPage() {
           </div>
 
           <div>
-            <label htmlFor="password" style={{ display: 'block', fontSize: 8, letterSpacing: 4, color: 'rgba(205,133,63,0.5)', textTransform: 'uppercase', marginBottom: 8 }}>
+            <label htmlFor="password" style={{ display: 'block', fontSize: 8, letterSpacing: 4, color: 'rgba(154,164,180,0.5)', textTransform: 'uppercase', marginBottom: 8 }}>
               Contrasena
             </label>
             <input
@@ -120,7 +120,7 @@ export default function AdminLoginPage() {
             style={{
               marginTop: 8,
               padding: '14px',
-              background: loading ? 'rgba(205,133,63,0.4)' : 'var(--gold)',
+              background: loading ? 'rgba(154,164,180,0.4)' : 'var(--gold)',
               color: '#000',
               fontSize: 9,
               letterSpacing: 5,

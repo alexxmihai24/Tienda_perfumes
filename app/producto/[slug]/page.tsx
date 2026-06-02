@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import { prisma } from '@/lib/prisma'
 import { AddToCartSection } from '@/components/ui/AddToCartSection'
-import { BottleViewerClient } from '@/components/ui/BottleViewerClient'
 import { ProductCard } from '@/components/ui/ProductCard'
+import { serializeProducts } from '@/lib/serialize'
 
 export const revalidate = 60
 
@@ -29,14 +29,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   if (!product) notFound()
 
   // Related products (same collection, exclude this one)
-  const related = await prisma.product.findMany({
-    where: {
-      active: true,
-      collection: product.collection ?? undefined,
-      NOT: { id: product.id },
-    },
-    take: 3,
-  })
+  const related = serializeProducts(
+    await prisma.product.findMany({
+      where: {
+        active: true,
+        collection: product.collection ?? undefined,
+        NOT: { id: product.id },
+      },
+      take: 3,
+    })
+  )
 
   const notesPyramid: [string, string[]][] = [
     ['Salida', product.notesTop],
@@ -56,26 +58,35 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           alignItems: 'start',
         }}
       >
-        {/* Left — image / 3D viewer */}
-        <div>
-          <BottleViewerClient />
-          {/* Fallback image behind viewer or shown when no 3D */}
+        {/* Left — product photo */}
+        <div style={{ position: 'sticky', top: 100 }}>
           {product.images[0] && (
             <div
               style={{
                 position: 'relative',
-                aspectRatio: '3/4',
+                aspectRatio: '4/5',
                 overflow: 'hidden',
-                background: 'radial-gradient(ellipse at center, rgba(205,133,63,0.06), var(--black-card))',
-                marginTop: 8,
+                borderRadius: 14,
+                border: '1px solid var(--border)',
+                background: 'linear-gradient(180deg, var(--surface-2), var(--ink))',
               }}
             >
+              <span
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  zIndex: 1,
+                  background: 'radial-gradient(80% 60% at 50% 115%, var(--glow), transparent 70%)',
+                  pointerEvents: 'none',
+                }}
+              />
               <Image
                 src={product.images[0]}
                 alt={product.name}
                 fill
-                className="object-contain"
-                style={{ padding: 32, mixBlendMode: 'luminosity', filter: 'sepia(0.1)' }}
+                sizes="(max-width: 900px) 92vw, 44vw"
+                className="object-cover"
                 priority
               />
             </div>
@@ -89,7 +100,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               style={{
                 fontSize: 8,
                 letterSpacing: 5,
-                color: 'rgba(205,133,63,0.45)',
+                color: 'var(--silver)',
                 textTransform: 'uppercase',
                 marginBottom: 16,
               }}
@@ -129,14 +140,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               marginBottom: 36,
               padding: '24px',
               border: '1px solid var(--border)',
-              background: 'rgba(205,133,63,0.015)',
+              background: 'rgba(154,164,180,0.03)',
             }}
           >
             <p
               style={{
                 fontSize: 8,
                 letterSpacing: 5,
-                color: 'rgba(205,133,63,0.5)',
+                color: 'var(--silver)',
                 textTransform: 'uppercase',
                 marginBottom: 20,
               }}
@@ -149,7 +160,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   style={{
                     fontSize: 8,
                     letterSpacing: 3,
-                    color: 'rgba(205,133,63,0.4)',
+                    color: 'var(--silver)',
                     textTransform: 'uppercase',
                     minWidth: 64,
                     paddingTop: 2,
@@ -167,7 +178,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           {/* Price + stock */}
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 24 }}>
             <div>
-              <p style={{ fontSize: 8, letterSpacing: 3, color: 'rgba(205,133,63,0.4)', textTransform: 'uppercase', marginBottom: 6 }}>
+              <p style={{ fontSize: 8, letterSpacing: 3, color: 'rgba(154,164,180,0.4)', textTransform: 'uppercase', marginBottom: 6 }}>
                 Precio
               </p>
               <p style={{ fontSize: 30, color: 'var(--gold-light)', letterSpacing: 1, fontWeight: 300 }}>
@@ -217,7 +228,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                   }}
                 >
                   {title}
-                  <span style={{ color: 'rgba(205,133,63,0.4)', fontSize: 14 }}>+</span>
+                  <span style={{ color: 'rgba(154,164,180,0.4)', fontSize: 14 }}>+</span>
                 </summary>
                 <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', lineHeight: 1.8, marginTop: 12 }}>
                   {content}
@@ -232,7 +243,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {related.length > 0 && (
         <section style={{ padding: '0 8vw 96px' }}>
           <div style={{ marginBottom: 40, paddingTop: 40, borderTop: '1px solid var(--border)' }}>
-            <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(205,133,63,0.4)', textTransform: 'uppercase', marginBottom: 12 }}>
+            <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(154,164,180,0.4)', textTransform: 'uppercase', marginBottom: 12 }}>
               Tambien te puede gustar
             </p>
           </div>

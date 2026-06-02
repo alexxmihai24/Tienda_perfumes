@@ -21,8 +21,8 @@ export function CollectionFilters({ collections, activeCollection, activeSort }:
   const pillStyle = (active: boolean) => ({
     padding: '6px 16px',
     border: '1px solid',
-    borderColor: active ? 'rgba(205,133,63,0.5)' : 'rgba(205,133,63,0.12)',
-    background: active ? 'rgba(205,133,63,0.1)' : 'transparent',
+    borderColor: active ? 'var(--silver)' : 'rgba(154,164,180,0.18)',
+    background: active ? 'rgba(154,164,180,0.12)' : 'transparent',
     color: active ? 'var(--gold-light)' : 'rgba(255,255,255,0.7)',
     fontSize: 9,
     letterSpacing: 3,

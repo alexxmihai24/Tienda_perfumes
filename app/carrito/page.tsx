@@ -50,7 +50,7 @@ export default function CartPage() {
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginBottom: 32 }}>
               Tu carrito esta vacio.
             </p>
-            <Link href="/coleccion" style={{ display: 'inline-block', padding: '14px 36px', border: '1px solid rgba(205,133,63,0.3)', color: 'var(--gold)', fontSize: 9, letterSpacing: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
+            <Link href="/coleccion" style={{ display: 'inline-block', padding: '14px 36px', border: '1px solid rgba(154,164,180,0.3)', color: 'var(--gold)', fontSize: 9, letterSpacing: 5, textTransform: 'uppercase', textDecoration: 'none' }}>
               Explorar Coleccion
             </Link>
           </div>
@@ -68,7 +68,7 @@ export default function CartPage() {
                   style={{ display: 'flex', gap: 24, padding: '28px 0', borderBottom: '1px solid var(--border)', alignItems: 'center' }}
                 >
                   {/* Image */}
-                  <div style={{ position: 'relative', width: 72, height: 96, flexShrink: 0, background: 'rgba(205,133,63,0.04)' }}>
+                  <div style={{ position: 'relative', width: 72, height: 96, flexShrink: 0, background: 'rgba(154,164,180,0.04)' }}>
                     {item.image && (
                       <Image src={item.image} alt={item.name} fill className="object-contain" style={{ mixBlendMode: 'luminosity' }} />
                     )}
@@ -101,7 +101,7 @@ export default function CartPage() {
 
             {/* Order summary */}
             <div style={{ minWidth: 280, padding: 28, border: '1px solid var(--border)', background: 'var(--black-card)', position: 'sticky', top: 100 }}>
-              <p style={{ fontSize: 9, letterSpacing: 5, color: 'rgba(205,133,63,0.45)', textTransform: 'uppercase', marginBottom: 24 }}>
+              <p style={{ fontSize: 9, letterSpacing: 5, color: 'rgba(154,164,180,0.45)', textTransform: 'uppercase', marginBottom: 24 }}>
                 Resumen del pedido
               </p>
 
@@ -133,7 +133,7 @@ export default function CartPage() {
                 style={{
                   width: '100%',
                   padding: '16px',
-                  background: loading ? 'rgba(205,133,63,0.4)' : 'var(--gold)',
+                  background: loading ? 'rgba(154,164,180,0.4)' : 'var(--gold)',
                   color: '#000',
                   fontSize: 9,
                   letterSpacing: 5,

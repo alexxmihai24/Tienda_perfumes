@@ -185,7 +185,7 @@ export function CartDrawer() {
                         width: 64,
                         height: 80,
                         flexShrink: 0,
-                        background: 'rgba(205,133,63,0.04)',
+                        background: 'rgba(154,164,180,0.05)',
                         overflow: 'hidden',
                       }}
                     >

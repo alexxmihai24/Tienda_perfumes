@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { NewsletterForm } from '@/components/ui/NewsletterForm'
 
 export function Footer() {
   return (
@@ -13,7 +14,7 @@ export function Footer() {
           </p>
         </div>
         <div>
-          <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(205,133,63,0.4)', textTransform: 'uppercase', marginBottom: 16 }}>
+          <p style={{ fontSize: 11, letterSpacing: 5, color: 'var(--silver)', textTransform: 'uppercase', marginBottom: 16 }}>
             Navegacion
           </p>
           <nav aria-label="Footer nav">
@@ -27,23 +28,13 @@ export function Footer() {
           </nav>
         </div>
         <div>
-          <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(205,133,63,0.4)', textTransform: 'uppercase', marginBottom: 16 }}>
+          <p style={{ fontSize: 11, letterSpacing: 5, color: 'var(--silver)', textTransform: 'uppercase', marginBottom: 16 }}>
             Newsletter
           </p>
           <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', marginBottom: 16, lineHeight: 1.6 }}>
             Recibe novedades y lanzamientos exclusivos.
           </p>
-          <form onSubmit={e => e.preventDefault()} style={{ display: 'flex' }}>
-            <input
-              type="email"
-              placeholder="tu@email.com"
-              aria-label="Email newsletter"
-              style={{ flex: 1, background: 'transparent', border: '1px solid var(--border)', borderRight: 'none', padding: '10px 14px', color: '#fff', fontSize: 11, outline: 'none' }}
-            />
-            <button type="submit" style={{ padding: '10px 16px', background: 'var(--gold)', color: '#000', fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', border: 'none', cursor: 'pointer', fontWeight: 600 }}>
-              &#8594;
-            </button>
-          </form>
+          <NewsletterForm compact />
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 24, borderTop: '1px solid var(--border)' }}>

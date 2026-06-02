@@ -53,7 +53,7 @@ export default async function ConfirmacionPage({
           style={{
             fontSize: 8,
             letterSpacing: 6,
-            color: 'rgba(205,133,63,0.5)',
+            color: 'rgba(154,164,180,0.5)',
             textTransform: 'uppercase',
             marginBottom: 20,
           }}
@@ -122,7 +122,7 @@ export default async function ConfirmacionPage({
             style={{
               display: 'inline-block',
               padding: '14px 40px',
-              border: '1px solid rgba(205,133,63,0.25)',
+              border: '1px solid rgba(154,164,180,0.25)',
               color: 'rgba(255,255,255,0.7)',
               fontSize: 9,
               letterSpacing: 5,

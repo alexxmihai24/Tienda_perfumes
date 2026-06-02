@@ -1,90 +1,91 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────
-   AZAHARA — Design Token System
-   Tailwind v4: all theme config lives here
+   AZAHARA — Sistema de diseño "Medianoche & Cromo"
+   Azul medianoche profundo + plata/hielo + cromo.
+   Tailwind v4: la config de tema vive aquí.
    ───────────────────────────────────────── */
 
 @theme {
-  /* Brand color palette */
-  --color-gold:        #cd853f;
-  --color-gold-light:  #f0b060;
-  --color-gold-dim:    rgba(205, 133, 63, 0.4);
-  --color-black-deep:  #030201;
-  --color-black-card:  #0d0804;
-  --color-white:       #ffffff;
-  --color-white-sub:   rgba(255, 255, 255, 0.5);
-  --color-border:      rgba(205, 133, 63, 0.12);
+  /* Paleta de marca */
+  --color-ink:       #05070c;
+  --color-night:     #0a0e17;
+  --color-surface:   #11151f;
+  --color-surface-2: #161d2e;
+  --color-steel:     #3a4a6b;
+  --color-silver:    #9aa4b4;
+  --color-ice:       #eef1f5;
+  --color-ice-dim:   rgba(238, 241, 245, 0.6);
 
-  /* Typography */
-  --font-sans:   "Geist", "Inter", system-ui, sans-serif;
-  --font-serif:  "Cormorant Garamond", "Playfair Display", Georgia, serif;
-  --font-mono:   "Geist Mono", "JetBrains Mono", monospace;
+  /* Tipografía (next/font sobrescribe --font-sans/--font-serif en <html>) */
+  --font-sans:   "Jost", system-ui, sans-serif;
+  --font-serif:  "Cormorant Garamond", Georgia, serif;
 
-  /* Extended spacing */
+  /* Espaciado extendido */
   --spacing-18: 4.5rem;
   --spacing-22: 5.5rem;
   --spacing-30: 7.5rem;
 
-  /* Animations */
-  --animate-grain:   grainShift 0.8s steps(1) infinite;
-  --animate-marquee: marquee 20s linear infinite;
-  --animate-pulse-gold: pulseGold 2s ease-in-out infinite;
+  /* Animaciones */
+  --animate-marquee:    marquee 26s linear infinite;
+  --animate-pulse-glow: pulseGlow 2.4s ease-in-out infinite;
 }
 
 /* ─────────────────────────────────────────
-   CSS Custom Properties (direct var access)
+   CSS Custom Properties (acceso directo var())
+   Se mantienen los nombres legacy (--gold, --black-deep…)
+   remapeados a la paleta fría para no romper estilos inline.
    ───────────────────────────────────────── */
 :root {
-  --gold:        #cd853f;
-  --gold-light:  #f0b060;
-  --gold-dim:    rgba(205, 133, 63, 0.4);
-  --black-deep:  #030201;
-  --black-card:  #0d0804;
-  --white:       #ffffff;
-  --white-sub:   rgba(255, 255, 255, 0.5);
-  --border:      rgba(205, 133, 63, 0.12);
+  /* Nuevos semánticos */
+  --ink:        #05070c;
+  --night:      #0a0e17;
+  --surface:    #11151f;
+  --surface-2:  #161d2e;
+  --steel:      #3a4a6b;
+  --silver:     #9aa4b4;
+  --ice:        #eef1f5;
+  --ice-dim:    rgba(238, 241, 245, 0.6);
+  --glow:       rgba(110, 130, 170, 0.35);
+  --chrome:     linear-gradient(135deg, #ffffff 0%, #aeb9cc 45%, #5e6b85 100%);
+
+  /* Legacy remapeado (compatibilidad con estilos existentes) */
+  --gold:       #9aa4b4;   /* acento → plata */
+  --gold-light: #eef1f5;   /* acento claro → hielo */
+  --gold-dim:   rgba(154, 164, 180, 0.45);
+  --black-deep: #05070c;
+  --black-card: #11151f;
+  --white:      #eef1f5;
+  --white-sub:  rgba(238, 241, 245, 0.55);
+  --border:     rgba(154, 164, 180, 0.14);
 }
 
 /* ─────────────────────────────────────────
    Keyframes
    ───────────────────────────────────────── */
-
-/* 8-step film grain animation */
-@keyframes grainShift {
-  0%   { background-position:   0px    0px; }
-  12%  { background-position:  10px   -5px; }
-  25%  { background-position:  -8px   12px; }
-  37%  { background-position:  14px    3px; }
-  50%  { background-position:  -6px   -9px; }
-  62%  { background-position:  18px    7px; }
-  75%  { background-position:  -12px  15px; }
-  87%  { background-position:   4px  -14px; }
-  100% { background-position:   0px    0px; }
-}
-
-/* Infinite horizontal marquee (olfactory notes band) */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-/* Gold pulsing scroll cue */
-@keyframes pulseGold {
+@keyframes pulseGlow {
   0%, 100% { opacity: 0.3; transform: scaleY(1); }
-  50%       { opacity: 1;   transform: scaleY(1.15); }
+  50%      { opacity: 1;   transform: scaleY(1.15); }
 }
 
-/* Fade-in upward — hero text entrance */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Subtle float — used in CSS fallback if R3F not loaded */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes drift {
+  from { background-position: 0 0; }
+  to   { background-position: 340px 340px; }
 }
 
 /* ─────────────────────────────────────────
@@ -92,9 +93,7 @@
    ───────────────────────────────────────── */
 *,
 *::before,
-*::after {
-  box-sizing: border-box;
-}
+*::after { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
@@ -102,8 +101,8 @@ html {
 }
 
 body {
-  background-color: var(--black-deep);
-  color: var(--white);
+  background-color: var(--ink);
+  color: var(--ice);
   font-family: var(--font-sans, system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -111,7 +110,7 @@ body {
   line-height: 1.6;
 }
 
-/* Reduced motion — respect user preference */
+/* Movimiento reducido — respeta la preferencia del usuario */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -119,162 +118,151 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 /* ─────────────────────────────────────────
-   Grain Overlay
-   Fixed layer giving "screen alive" texture
+   Atmósfera — campo de partículas/puntos frío
+   Capa fija sutil que da profundidad (no grano cálido).
    ───────────────────────────────────────── */
-.grain {
+.starfield {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.04;
-  background-image: url("/grain.svg");
-  background-size: 200px 200px;
-  background-repeat: repeat;
-  animation: grainShift 0.8s steps(1) infinite;
+  z-index: 1;
+  opacity: 0.5;
+  background-image: radial-gradient(rgba(174, 185, 204, 0.18) 1px, transparent 1px);
+  background-size: 64px 64px;
+  animation: drift 60s linear infinite;
   will-change: background-position;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 80%);
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .grain { animation: none; }
+  .starfield { animation: none; }
 }
 
 /* ─────────────────────────────────────────
-   Scrollbar — slim gold aesthetic
+   Scrollbar — fina, cromada
    ───────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--black-deep);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--gold-dim);
-  border-radius: 2px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--gold);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--gold-dim) var(--black-deep);
-}
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--steel); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--silver); }
+* { scrollbar-width: thin; scrollbar-color: var(--steel) var(--ink); }
 
 /* ─────────────────────────────────────────
-   Typography Helpers
+   Tipografía
    ───────────────────────────────────────── */
-.font-serif {
-  font-family: var(--font-serif, Georgia, serif);
+.font-serif { font-family: var(--font-serif, Georgia, serif); }
+.font-light { font-weight: 300; }
+
+.nav-link { position: relative; transition: color 200ms ease; }
+.nav-link:hover { color: var(--ice); }
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -6px;
+  width: 0; height: 1px;
+  background: var(--silver);
+  transition: width 240ms ease;
 }
+.nav-link:hover::after { width: 100%; }
 
 .text-eyebrow {
-  font-size: 9px;
-  letter-spacing: 6px;
+  font-size: 11px;
+  letter-spacing: 4px;
   text-transform: uppercase;
-  color: rgba(205, 133, 63, 0.6);
+  color: var(--silver);
 }
 
 .text-display {
-  font-weight: 200;
-  line-height: 1.05;
+  font-weight: 300;
+  line-height: 1.02;
   letter-spacing: -0.5px;
 }
 
-/* ─────────────────────────────────────────
-   Button Helpers
-   ───────────────────────────────────────── */
+/* Texto con acabado cromado */
+.chrome-text {
+  background: var(--chrome);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
-/* Primary gold fill — text black for contrast (WCAG AA) */
-.btn-gold {
+/* ─────────────────────────────────────────
+   Superficie "glass" (nav, drawers)
+   ───────────────────────────────────────── */
+.glass {
+  background: rgba(10, 14, 23, 0.55);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ─────────────────────────────────────────
+   Botones
+   ───────────────────────────────────────── */
+.btn-gold {  /* primario — relleno cromado, texto oscuro */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--gold);
-  color: #000000;
-  font-size: 9px;
+  background: linear-gradient(90deg, #eef1f5, #aeb9cc);
+  color: #0a0e17;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
-  padding: 14px 36px;
+  padding: 15px 38px;
   border: none;
-  border-radius: 1px;
+  border-radius: 2px;
   cursor: pointer;
-  transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
   text-decoration: none;
   user-select: none;
 }
-
 .btn-gold:hover:not(:disabled) {
-  background-color: var(--gold-light);
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(205, 133, 63, 0.25);
+  filter: brightness(1.08);
+  box-shadow: 0 10px 30px rgba(110, 130, 170, 0.4);
 }
+.btn-gold:focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; }
+.btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.btn-gold:focus-visible {
-  outline: 2px solid var(--gold-light);
-  outline-offset: 3px;
-}
-
-.btn-gold:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Outline variant — transparent with gold border */
-.btn-outline {
+.btn-outline {  /* secundario — borde plata translúcido */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  color: var(--gold-light);
-  font-size: 9px;
+  background: rgba(154, 164, 180, 0.04);
+  color: var(--ice);
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 4px;
   text-transform: uppercase;
-  padding: 13px 35px;
-  border: 1px solid var(--border);
-  border-radius: 1px;
+  padding: 14px 37px;
+  border: 1px solid rgba(154, 164, 180, 0.35);
+  border-radius: 2px;
   cursor: pointer;
-  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease;
+  transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
   text-decoration: none;
   user-select: none;
 }
-
 .btn-outline:hover:not(:disabled) {
-  border-color: rgba(205, 133, 63, 0.5);
-  background-color: rgba(205, 133, 63, 0.06);
-  color: var(--gold-light);
+  border-color: rgba(174, 185, 204, 0.7);
+  background-color: rgba(154, 164, 180, 0.1);
+  box-shadow: 0 0 24px rgba(110, 130, 170, 0.25);
 }
+.btn-outline:focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; }
+.btn-outline:disabled { opacity: 0.4; cursor: not-allowed; }
 
-.btn-outline:focus-visible {
-  outline: 2px solid var(--gold-light);
-  outline-offset: 3px;
-}
-
-.btn-outline:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-/* Ghost text-only button */
 .btn-ghost {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 9px;
+  color: var(--ice-dim);
+  font-size: 10px;
   letter-spacing: 3px;
   text-transform: uppercase;
   cursor: pointer;
@@ -282,33 +270,24 @@ body {
   padding: 0;
   text-decoration: none;
 }
-
 .btn-ghost::after {
   content: "→";
-  color: rgba(205, 133, 63, 0.5);
+  color: var(--silver);
   transition: color 200ms ease, transform 200ms ease;
 }
-
-.btn-ghost:hover {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.btn-ghost:hover::after {
-  color: var(--gold);
-  transform: translateX(4px);
-}
+.btn-ghost:hover { color: var(--ice); }
+.btn-ghost:hover::after { color: var(--ice); transform: translateX(4px); }
 
 /* ─────────────────────────────────────────
-   Marquee Strip
+   Marquee
    ───────────────────────────────────────── */
 .marquee-track {
   display: flex;
   gap: 48px;
   white-space: nowrap;
-  animation: marquee 20s linear infinite;
+  animation: marquee 26s linear infinite;
   will-change: transform;
 }
-
 .marquee-wrap {
   overflow: hidden;
   border-top: 1px solid var(--border);
@@ -317,50 +296,43 @@ body {
 }
 
 /* ─────────────────────────────────────────
-   Scroll Cue Line
+   Línea / cue de scroll
    ───────────────────────────────────────── */
 .scroll-line {
   width: 1px;
   height: 48px;
-  background: linear-gradient(180deg, rgba(205, 133, 63, 0.5), transparent);
-  animation: pulseGold 2s ease-in-out infinite;
+  background: linear-gradient(180deg, var(--silver), transparent);
+  animation: pulseGlow 2.4s ease-in-out infinite;
 }
 
 /* ─────────────────────────────────────────
-   Card Surface
+   Tarjetas
    ───────────────────────────────────────── */
 .card-dark {
-  background-color: var(--black-card);
+  background-color: var(--surface);
   border: 1px solid var(--border);
-  transition: background-color 300ms ease, box-shadow 300ms ease;
+  transition: background-color 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
 }
-
 .card-dark:hover {
-  background-color: #0f0906;
-  box-shadow: 0 0 0 1px rgba(205, 133, 63, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
+  background-color: var(--surface-2);
+  border-color: rgba(154, 164, 180, 0.3);
+  box-shadow: 0 0 0 1px rgba(154, 164, 180, 0.12), 0 18px 44px rgba(0, 0, 0, 0.55);
 }
 
-/* ─────────────────────────────────────────
-   Ambient Glow Helpers
-   ───────────────────────────────────────── */
+/* Halo de luz frío reutilizable */
 .glow-amber {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(205, 133, 63, 0.08), transparent 70%);
-  filter: blur(60px);
+  background: radial-gradient(circle, var(--glow), transparent 70%);
+  filter: blur(70px);
   pointer-events: none;
 }
 
-/* ─────────────────────────────────────────
-   Selection color
-   ───────────────────────────────────────── */
-::selection {
-  background-color: rgba(205, 133, 63, 0.25);
-  color: var(--white);
-}
+/* Selección */
+::selection { background-color: rgba(154, 164, 180, 0.3); color: var(--ice); }
 
 /* ─────────────────────────────────────────
-   Skip link — visible only on keyboard focus
+   Skip link — visible solo al enfocar con teclado
    ───────────────────────────────────────── */
 .skip-link {
   position: fixed;
@@ -368,8 +340,8 @@ body {
   left: 8px;
   z-index: 10000;
   transform: translateY(-160%);
-  background: var(--gold);
-  color: #000;
+  background: var(--ice);
+  color: #0a0e17;
   padding: 10px 18px;
   font-size: 11px;
   letter-spacing: 2px;
@@ -377,20 +349,25 @@ body {
   text-decoration: none;
   transition: transform 0.2s ease;
 }
+.skip-link:focus { transform: translateY(0); outline: 2px solid var(--silver); outline-offset: 2px; }
 
-.skip-link:focus {
-  transform: translateY(0);
-  outline: 2px solid var(--gold-light);
-  outline-offset: 2px;
-}
-
-/* ─────────────────────────────────────────
-   Visible keyboard focus for form controls
-   (box-shadow ring survives inline outline:none)
-   ───────────────────────────────────────── */
+/* Foco visible en controles de formulario */
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  box-shadow: 0 0 0 2px var(--gold-light);
-  border-color: var(--gold-light);
+  box-shadow: 0 0 0 2px var(--ice);
+  border-color: var(--ice);
+}
+
+/* ─────────────────────────────────────────
+   Utilidades responsive (móvil first)
+   ───────────────────────────────────────── */
+.container-x { padding-left: clamp(20px, 10vw, 200px); padding-right: clamp(20px, 10vw, 200px); }
+
+/* Oculta en móvil / muestra en desktop */
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+}
+@media (min-width: 769px) {
+  .only-mobile { display: none !important; }
 }

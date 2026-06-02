@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { ProductCard } from '@/components/ui/ProductCard'
 import { CollectionFilters } from '@/components/ui/CollectionFilters'
+import { serializeProducts } from '@/lib/serialize'
 
 export const revalidate = 60
 
@@ -20,13 +21,15 @@ export default async function CollectionPage({
       ? { price: 'desc' as const }
       : { createdAt: 'desc' as const }
 
-  const products = await prisma.product.findMany({
-    where: {
-      active: true,
-      ...(collection ? { collection } : {}),
-    },
-    orderBy,
-  })
+  const products = serializeProducts(
+    await prisma.product.findMany({
+      where: {
+        active: true,
+        ...(collection ? { collection } : {}),
+      },
+      orderBy,
+    })
+  )
 
   // Unique collections for filter
   const allProducts = await prisma.product.findMany({
@@ -45,7 +48,7 @@ export default async function CollectionPage({
           style={{
             fontSize: 8,
             letterSpacing: 6,
-            color: 'rgba(205,133,63,0.4)',
+            color: 'rgba(154,164,180,0.4)',
             textTransform: 'uppercase',
             marginBottom: 12,
           }}
@@ -64,7 +67,7 @@ export default async function CollectionPage({
         >
           Coleccion
         </h1>
-        <div style={{ width: 36, height: 1, background: 'rgba(205,133,63,0.35)', marginBottom: 40 }} />
+        <div style={{ width: 36, height: 1, background: 'rgba(154,164,180,0.35)', marginBottom: 40 }} />
 
         {/* Filters — client */}
         <CollectionFilters

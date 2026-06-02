@@ -13,7 +13,7 @@ export default async function AdminProductosPage() {
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 40 }}>
         <div>
-          <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(205,133,63,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>Inventario</p>
+          <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(154,164,180,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>Inventario</p>
           <h1 className="font-light" style={{ fontSize: 24, letterSpacing: 2, color: '#fff' }}>Productos</h1>
         </div>
         <Link
@@ -31,7 +31,7 @@ export default async function AdminProductosPage() {
               {['Producto', 'Coleccion', 'Precio', 'Stock', 'Estado', ''].map(h => (
                 <th
                   key={h}
-                  style={{ padding: '12px 16px', fontSize: 8, letterSpacing: 3, color: 'rgba(205,133,63,0.45)', textTransform: 'uppercase', textAlign: 'left', fontWeight: 400 }}
+                  style={{ padding: '12px 16px', fontSize: 8, letterSpacing: 3, color: 'rgba(154,164,180,0.45)', textTransform: 'uppercase', textAlign: 'left', fontWeight: 400 }}
                 >
                   {h}
                 </th>
@@ -40,7 +40,7 @@ export default async function AdminProductosPage() {
           </thead>
           <tbody>
             {products.map(p => (
-              <tr key={p.id} style={{ borderBottom: '1px solid rgba(205,133,63,0.04)' }}>
+              <tr key={p.id} style={{ borderBottom: '1px solid rgba(154,164,180,0.04)' }}>
                 <td style={{ padding: '16px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                     {p.images[0] && (
@@ -79,7 +79,7 @@ export default async function AdminProductosPage() {
                 <td style={{ padding: '16px' }}>
                   <Link
                     href={`/admin/productos/${p.id}`}
-                    style={{ fontSize: 9, color: 'rgba(205,133,63,0.55)', letterSpacing: 2, textTransform: 'uppercase', textDecoration: 'none' }}
+                    style={{ fontSize: 9, color: 'rgba(154,164,180,0.55)', letterSpacing: 2, textTransform: 'uppercase', textDecoration: 'none' }}
                   >
                     Editar &#8594;
                   </Link>
