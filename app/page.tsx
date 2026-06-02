@@ -1,10 +1,12 @@
-import { Suspense } from 'react'
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
-import { ProductCard } from '@/components/ui/ProductCard'
-import { HeroClient } from '@/components/ui/HeroClient'
-import { ScrollStoryClient } from '@/components/ui/ScrollStoryClient'
+import { ProductCarousel } from '@/components/ui/ProductCarousel'
+import { Hero } from '@/components/ui/Hero'
+import { StorySection } from '@/components/ui/StorySection'
 import { MarqueeStrip } from '@/components/ui/MarqueeStrip'
+import { NewsletterForm } from '@/components/ui/NewsletterForm'
+import { Reveal } from '@/components/ui/Reveal'
+import { serializeProducts } from '@/lib/serialize'
 
 export const revalidate = 60
 
@@ -22,69 +24,73 @@ const MARQUEE_NOTES = [
 ]
 
 export default async function HomePage() {
-  const featured = await prisma.product.findMany({
-    where: { featured: true, active: true },
-    take: 3,
-    orderBy: { createdAt: 'desc' },
-  })
+  const featured = serializeProducts(
+    await prisma.product.findMany({
+      where: { active: true },
+      take: 8,
+      orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
+    })
+  )
 
   return (
     <main>
-      {/* Hero — client boundary for 3D + Framer Motion */}
-      <HeroClient />
+      {/* Hero — product cover (public/hero.png) */}
+      <Hero />
 
-      {/* Scroll Story — client boundary */}
-      <ScrollStoryClient />
+      {/* Signature stories — editorial scroll reveals */}
+      <StorySection />
 
       {/* Marquee */}
       <MarqueeStrip items={MARQUEE_NOTES} />
 
-      {/* Featured Products */}
-      <section style={{ padding: '96px 10vw', background: 'var(--black-deep)' }}>
-        <div style={{ marginBottom: 64 }}>
-          <p
-            style={{
-              fontSize: 8,
-              letterSpacing: 6,
-              color: 'rgba(205,133,63,0.4)',
-              textTransform: 'uppercase',
-              marginBottom: 12,
-            }}
-          >
-            Destacados
-          </p>
-          <h2
-            className="font-light"
-            style={{ fontSize: 'clamp(28px,4vw,56px)', letterSpacing: 2, color: '#fff', lineHeight: 1.1, marginBottom: 20 }}
-          >
-            Esencias de<br />temporada
-          </h2>
-          <div style={{ width: 36, height: 1, background: 'rgba(205,133,63,0.35)' }} />
-        </div>
+      {/* Featured Products — carrusel interactivo */}
+      <section id="destacados" style={{ padding: '110px 0', background: 'var(--night)', overflow: 'hidden' }}>
+        <Reveal>
+          <div style={{ marginBottom: 56, padding: '0 10vw', textAlign: 'center' }}>
+            <p
+              style={{
+                fontSize: 11,
+                letterSpacing: 5,
+                color: 'var(--silver)',
+                textTransform: 'uppercase',
+                marginBottom: 14,
+              }}
+            >
+              Destacados
+            </p>
+            <h2
+              className="font-serif"
+              style={{
+                fontSize: 'clamp(30px,4.5vw,60px)',
+                letterSpacing: -0.5,
+                color: 'var(--ice)',
+                fontWeight: 300,
+                lineHeight: 1.05,
+                marginBottom: 20,
+              }}
+            >
+              Esencias de temporada
+            </h2>
+            <div style={{ width: 40, height: 1, background: 'var(--silver)', opacity: 0.4, margin: '0 auto' }} />
+          </div>
+        </Reveal>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 1,
-            background: 'var(--border)',
-          }}
-        >
-          {featured.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <Reveal y={36} delay={0.05}>
+          <div style={{ padding: '0 6vw' }}>
+            <ProductCarousel products={featured} />
+          </div>
+        </Reveal>
 
-        <div style={{ marginTop: 48, textAlign: 'center' }}>
+        <div style={{ marginTop: 56, textAlign: 'center' }}>
           <Link
             href="/coleccion"
             style={{
               display: 'inline-block',
               padding: '14px 40px',
-              border: '1px solid rgba(205,133,63,0.3)',
-              color: 'var(--gold)',
-              fontSize: 9,
-              letterSpacing: 5,
+              border: '1px solid var(--border)',
+              color: 'var(--ice)',
+              fontSize: 11,
+              letterSpacing: 4,
               textTransform: 'uppercase',
               textDecoration: 'none',
               transition: 'all 0.3s',
@@ -96,62 +102,28 @@ export default async function HomePage() {
       </section>
 
       {/* Newsletter Strip */}
-      <section
-        style={{
-          padding: '80px 10vw',
-          background: 'var(--black-card)',
-          borderTop: '1px solid var(--border)',
-          borderBottom: '1px solid var(--border)',
-          textAlign: 'center',
-        }}
-      >
-        <p style={{ fontSize: 8, letterSpacing: 6, color: 'rgba(205,133,63,0.4)', textTransform: 'uppercase', marginBottom: 16 }}>
-          Acceso Exclusivo
-        </p>
-        <h2 className="font-light" style={{ fontSize: 'clamp(24px,3vw,40px)', letterSpacing: 2, color: '#fff', marginBottom: 16 }}>
-          Descubre los lanzamientos<br />antes que nadie
-        </h2>
-        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginBottom: 40, lineHeight: 1.7 }}>
-          Suscribete y recibe acceso anticipado, ediciones limitadas y composiciones ineditas.
-        </p>
-        <form
-          onSubmit={e => e.preventDefault()}
-          style={{ display: 'flex', maxWidth: 420, margin: '0 auto' }}
-          aria-label="Suscripcion newsletter"
+      <Reveal>
+        <section
+          style={{
+            padding: '90px 10vw',
+            background: 'var(--surface)',
+            borderTop: '1px solid var(--border)',
+            borderBottom: '1px solid var(--border)',
+            textAlign: 'center',
+          }}
         >
-          <input
-            type="email"
-            placeholder="tu@email.com"
-            aria-label="Email"
-            style={{
-              flex: 1,
-              background: 'transparent',
-              border: '1px solid var(--border)',
-              borderRight: 'none',
-              padding: '14px 20px',
-              color: '#fff',
-              fontSize: 11,
-              outline: 'none',
-            }}
-          />
-          <button
-            type="submit"
-            style={{
-              padding: '14px 24px',
-              background: 'var(--gold)',
-              color: '#000',
-              fontSize: 9,
-              letterSpacing: 3,
-              textTransform: 'uppercase',
-              border: 'none',
-              cursor: 'pointer',
-              fontWeight: 600,
-            }}
-          >
-            Suscribirse
-          </button>
-        </form>
-      </section>
+          <p style={{ fontSize: 11, letterSpacing: 5, color: 'var(--silver)', textTransform: 'uppercase', marginBottom: 16 }}>
+            Acceso Exclusivo
+          </p>
+          <h2 className="font-serif" style={{ fontSize: 'clamp(26px,3.4vw,44px)', letterSpacing: -0.3, color: 'var(--ice)', fontWeight: 300, marginBottom: 16 }}>
+            Descubre los lanzamientos<br />antes que nadie
+          </h2>
+          <p style={{ fontSize: 13, color: 'var(--ice-dim)', marginBottom: 40, lineHeight: 1.7 }}>
+            Suscribete y recibe acceso anticipado, ediciones limitadas y composiciones ineditas.
+          </p>
+          <NewsletterForm />
+        </section>
+      </Reveal>
     </main>
   )
 }

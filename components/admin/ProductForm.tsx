@@ -16,9 +16,9 @@ const inputStyle: React.CSSProperties = {
 
 const labelStyle: React.CSSProperties = {
   display: 'block',
-  fontSize: 8,
+  fontSize: 10,
   letterSpacing: 4,
-  color: 'rgba(205,133,63,0.5)',
+  color: 'var(--silver)',
   textTransform: 'uppercase',
   marginBottom: 8,
 }
@@ -175,7 +175,7 @@ export function ProductForm() {
           disabled={loading}
           style={{
             padding: '14px 36px',
-            background: loading ? 'rgba(205,133,63,0.4)' : 'var(--gold)',
+            background: loading ? 'rgba(154,164,180,0.4)' : 'var(--gold)',
             color: '#000',
             fontSize: 9,
             letterSpacing: 5,

@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" className={`${cormorant.variable} ${jost.variable}`}>
       <body style={{ fontFamily: 'var(--font-sans), system-ui, sans-serif' }}>
         <a href="#contenido" className="skip-link">Saltar al contenido</a>
-        <div className="grain" aria-hidden="true" />
+        <div className="starfield" aria-hidden="true" />
         <CartProvider>
           <Navbar />
           <CartDrawer />

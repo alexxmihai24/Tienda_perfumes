@@ -20,7 +20,7 @@ export default async function AdminPedidosPage() {
   return (
     <div>
       <div style={{ marginBottom: 40 }}>
-        <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(205,133,63,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>
+        <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(154,164,180,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>
           Historial
         </p>
         <h1 className="font-light" style={{ fontSize: 24, letterSpacing: 2, color: '#fff' }}>
@@ -33,7 +33,7 @@ export default async function AdminPedidosPage() {
           <thead>
             <tr style={{ borderBottom: '1px solid var(--border)' }}>
               {['ID Pedido', 'Cliente', 'Total', 'Items', 'Estado', 'Fecha'].map(h => (
-                <th key={h} style={{ padding: '12px 16px', fontSize: 8, letterSpacing: 3, color: 'rgba(205,133,63,0.45)', textTransform: 'uppercase', textAlign: 'left', fontWeight: 400 }}>
+                <th key={h} style={{ padding: '12px 16px', fontSize: 8, letterSpacing: 3, color: 'rgba(154,164,180,0.45)', textTransform: 'uppercase', textAlign: 'left', fontWeight: 400 }}>
                   {h}
                 </th>
               ))}
@@ -49,7 +49,7 @@ export default async function AdminPedidosPage() {
             ) : orders.map(o => {
               const colors = STATUS_COLORS[o.status] ?? STATUS_COLORS.PENDING
               return (
-                <tr key={o.id} style={{ borderBottom: '1px solid rgba(205,133,63,0.04)' }}>
+                <tr key={o.id} style={{ borderBottom: '1px solid rgba(154,164,180,0.04)' }}>
                   <td style={{ padding: '16px', fontSize: 10, color: 'rgba(255,255,255,0.28)', fontFamily: 'monospace' }}>
                     {o.id.slice(0, 12)}&#8230;
                   </td>

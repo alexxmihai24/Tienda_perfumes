@@ -6,11 +6,8 @@ const nextConfig: NextConfig = {
   // ---------------------------------------------------------------------------
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        pathname: "/**",
-      },
+      // Product photos are served locally from /public/products. The only
+      // remaining remote origin is Supabase storage (admin-uploaded images).
       {
         protocol: "https",
         hostname: "*.supabase.co",
@@ -35,8 +32,8 @@ const nextConfig: NextConfig = {
           //    per-request nonces end-to-end.
           //  - style-src 'unsafe-inline': required by Tailwind and inline
           //    style props used throughout the app.
-          //  - img-src: allows Unsplash, Supabase storage, and data: URIs
-          //    (used by Three.js textures / SVG grain).
+          //  - img-src: allows local images, Supabase storage, and data:/blob:
+          //    URIs (used by Three.js textures / SVG grain).
           //  - connect-src: allows Stripe JS, Supabase REST/Realtime, and
           //    same-origin API calls.
           //  - frame-src: Stripe 3DS iframe hosted on js.stripe.com.
@@ -48,7 +45,7 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' https://js.stripe.com",
               "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://images.unsplash.com https://*.supabase.co",
+              "img-src 'self' data: blob: https://*.supabase.co",
               "font-src 'self' data:",
               "connect-src 'self' https://api.stripe.com https://*.supabase.co wss://*.supabase.co",
               "frame-src https://js.stripe.com https://hooks.stripe.com",

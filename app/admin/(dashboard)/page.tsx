@@ -25,7 +25,7 @@ export default async function AdminDashboard() {
   return (
     <div>
       <div style={{ marginBottom: 40 }}>
-        <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(205,133,63,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>
+        <p style={{ fontSize: 8, letterSpacing: 5, color: 'rgba(154,164,180,0.4)', textTransform: 'uppercase', marginBottom: 8 }}>
           Panel de control
         </p>
         <h1 className="font-light" style={{ fontSize: 28, letterSpacing: 2, color: '#fff' }}>
@@ -52,7 +52,7 @@ export default async function AdminDashboard() {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
               <p style={{ fontSize: 8, letterSpacing: 3, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>{label}</p>
-              <span style={{ color: 'rgba(205,133,63,0.25)', fontSize: 12 }} dangerouslySetInnerHTML={{ __html: icon }} />
+              <span style={{ color: 'rgba(154,164,180,0.25)', fontSize: 12 }} dangerouslySetInnerHTML={{ __html: icon }} />
             </div>
             <p style={{ fontSize: 26, fontWeight: 300, color, letterSpacing: 1 }}>{value}</p>
           </div>
@@ -60,7 +60,7 @@ export default async function AdminDashboard() {
       </div>
 
       <div style={{ border: '1px solid var(--border)', padding: 24, background: 'var(--black-card)' }}>
-        <p style={{ fontSize: 9, letterSpacing: 4, color: 'rgba(205,133,63,0.4)', textTransform: 'uppercase', marginBottom: 16 }}>
+        <p style={{ fontSize: 9, letterSpacing: 4, color: 'rgba(154,164,180,0.4)', textTransform: 'uppercase', marginBottom: 16 }}>
           Accesos rapidos
         </p>
         <div style={{ display: 'flex', gap: 12 }}>
