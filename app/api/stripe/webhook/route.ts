@@ -4,10 +4,12 @@ import { stripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import type Stripe from 'stripe'
 
-// Required: disable body parsing so we receive the raw buffer for signature verification
-export const config = {
-  api: { bodyParser: false },
-}
+// App Router route handlers do NOT parse the body, so `req.text()` below
+// already gives us the raw payload Stripe needs for signature verification.
+// (The Pages-Router `config.api.bodyParser` option is invalid here and breaks
+// the build.) Force Node runtime + dynamic so the webhook always runs live.
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text()

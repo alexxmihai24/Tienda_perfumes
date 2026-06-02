@@ -24,13 +24,20 @@ const MARQUEE_NOTES = [
 ]
 
 export default async function HomePage() {
-  const featured = serializeProducts(
-    await prisma.product.findMany({
-      where: { active: true },
-      take: 8,
-      orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
-    })
-  )
+  let featured = serializeProducts([])
+  try {
+    featured = serializeProducts(
+      await prisma.product.findMany({
+        where: { active: true },
+        take: 8,
+        orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
+      })
+    )
+  } catch {
+    // DB unavailable at build time — render the page without the carousel
+    // rather than failing the whole build (it hydrates on next revalidate).
+    featured = serializeProducts([])
+  }
 
   return (
     <main>
